@@ -56,13 +56,18 @@ export async function getFeaturedPost() {
   try {
     const entries = await client.getEntries({
       content_type: 'blogPost',
-      'fields.featured': true,
-      limit: 1,
+      'fields.featured[exists]': true,
+      limit: 10,
       order: '-fields.publishDate',
       include: 2,
     });
 
-    return entries.items.length > 0 ? mapPost(entries.items[0]) : null;
+    // Filter for featured posts on client side
+    const featuredPosts = entries.items.filter(
+      (item) => item.fields.featured === true
+    );
+
+    return featuredPosts.length > 0 ? mapPost(featuredPosts[0]) : null;
   } catch (error) {
     console.error('Error fetching featured post:', error);
     return null;
