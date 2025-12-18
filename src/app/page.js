@@ -57,16 +57,6 @@ export default async function BlogPage() {
 
   return (
     <div className="container mx-auto px-4 lg:px-8 py-12">
-      {/* Warning banner if using mock data */}
-      {useMockData && (
-        <div className="mb-8 p-4 bg-category-yellow/10 border border-category-yellow/30 rounded-lg">
-          <p className="text-sm text-text-secondary text-center">
-            ⚠️ <strong>Демо-режим:</strong> Отображаются тестовые данные. Настройте Contentful для
-            загрузки реального контента. См. <code className="bg-surface-elevated px-2 py-1 rounded">README.md</code>
-          </p>
-        </div>
-      )}
-
       {/* Featured Post */}
       {featuredPost && <FeaturedPost post={featuredPost} />}
 
