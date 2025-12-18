@@ -1,14 +1,16 @@
 import { createClient } from 'contentful';
 
 // Check if Contentful is configured
-const isContentfulConfigured =
-  process.env.CONTENTFUL_SPACE_ID && process.env.CONTENTFUL_ACCESS_TOKEN;
+const spaceId = process.env.CONTENTFUL_SPACE_ID?.trim();
+const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN?.trim();
+
+const isContentfulConfigured = spaceId && accessToken;
 
 // Initialize Contentful client only if configured
 const client = isContentfulConfigured
   ? createClient({
-      space: process.env.CONTENTFUL_SPACE_ID,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+      space: spaceId,
+      accessToken: accessToken,
     })
   : null;
 
