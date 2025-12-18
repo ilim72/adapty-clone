@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const footerLinks = {
   'Продукт': [
@@ -9,7 +12,7 @@ const footerLinks = {
   ],
   'Компания': [
     { label: 'О нас', href: '#' },
-    { label: 'Блог', href: '/' },
+    { label: 'Блог', href: '/blog' },
     { label: 'Карьера', href: '#' },
     { label: 'Контакты', href: '#' },
   ],
@@ -53,18 +56,24 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border-light mt-space-xxl bg-surface-elevated">
+    <footer className="border-t border-border-light mt-space-xxl bg-surface-elevated relative overflow-hidden">
+      {/* Decorative gradient */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
       <div className="container mx-auto px-4 lg:px-8 py-space-xl">
         {/* Main Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-block mb-4 hover:opacity-80 transition-opacity">
+            <Link href="/" className="inline-block mb-4 group">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
+                <motion.div
+                  whileHover={{ scale: 1.05, rotate: -5 }}
+                  className="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center shadow-button"
+                >
                   <span className="text-white font-bold text-lg">A</span>
-                </div>
-                <span className="text-xl font-semibold text-text-primary">
+                </motion.div>
+                <span className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors">
                   Adapty
                 </span>
               </div>
@@ -73,26 +82,27 @@ export default function Footer() {
               Лучший способ создавать и развивать приложения с подписками.
             </p>
             {/* Social Icons */}
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {socialLinks.map((link) => (
-                <a
+                <motion.a
                   key={link.name}
                   href={link.href}
-                  className="text-text-tertiary hover:text-text-primary transition-colors"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-9 h-9 rounded-lg bg-surface-hover hover:bg-primary-light flex items-center justify-center text-text-tertiary hover:text-primary transition-colors"
                   aria-label={link.name}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <svg
-                    width="20"
-                    height="20"
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="w-5 h-5"
                   >
                     {link.icon}
                   </svg>
-                </a>
+                </motion.a>
               ))}
             </div>
           </div>
@@ -100,7 +110,7 @@ export default function Footer() {
           {/* Link Columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-sm font-semibold text-text-primary mb-4">
+              <h4 className="text-sm font-bold text-text-primary mb-4">
                 {category}
               </h4>
               <ul className="space-y-3">
@@ -108,7 +118,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-text-secondary hover:text-text-primary transition-colors"
+                      className="text-sm text-text-secondary hover:text-primary transition-colors inline-block"
                     >
                       {link.label}
                     </Link>
@@ -121,9 +131,22 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-space-m border-t border-border-light">
-          <p className="text-sm text-text-tertiary text-center">
-            © {new Date().getFullYear()} Adapty. Все права защищены.
-          </p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-text-tertiary">
+              © {new Date().getFullYear()} Adapty. Все права защищены.
+            </p>
+            <div className="flex items-center gap-1 text-sm text-text-tertiary">
+              <span>Сделано с</span>
+              <motion.span
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                className="text-accent"
+              >
+                ♥
+              </motion.span>
+              <span>для разработчиков</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
